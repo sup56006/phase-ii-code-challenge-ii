@@ -1,23 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import postsData from "./data/posts";
+import PostList from "./components/PostList";
 
 function App() {
+  const [posts, setPosts] = useState(postsData);
+
+  function handleToggleLike(id) {
+    const updatedPosts = posts.map((post) =>
+      post.id === id ? { ...post, liked: !post.liked } : post
+    );
+    setPosts(updatedPosts);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Blog Posts</h1>
+      <PostList posts={posts} onToggleLike={handleToggleLike} />
     </div>
   );
 }
